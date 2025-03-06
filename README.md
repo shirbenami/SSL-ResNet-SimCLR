@@ -12,8 +12,6 @@ This project explores self-supervised learning techniques using SimCLR and evalu
 2. **Self-Supervised Pretraining (SimCLR):**
    - Pretrained ResNet50 on the STL10 dataset's unlabeled images.
    - Optimized using the InfoNCE loss function to learn useful feature representations.
-     ![ssl_losses_graphs](https://github.com/user-attachments/assets/7f38daa0-23cf-4bd0-8305-a303af3f6981)
-
 
 3. **Fine-Tuning and Evaluation:**
    - Fine-tuned the pretrained ResNet50 on the STL10 dataset's labeled training set.

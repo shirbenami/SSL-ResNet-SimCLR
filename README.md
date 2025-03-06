@@ -21,9 +21,29 @@ This project explores self-supervised learning techniques using SimCLR and evalu
    -  Compared the performance of the SSL-trained model with the supervised baseline.
    - Visualized performance metrics such as loss, accuracy, and confusion matrix.
 
+4. **features_quality_check:**
+  Before fine-tuning the SSL-pretrained ResNet50 on the labeled portion of the STL10 dataset, the feature representations learned by the model were evaluated using dimensionality reduction and clustering techniques. The goal was to assess the quality of the features extracted by the SimCLR pretraining process.
+
+  1. **PCA (Principal Component Analysis)**:
+   - PCA was applied to reduce the dimensionality of the feature space from 2048 to 2, allowing visualization of how well the model’s feature representations are clustered or spread out.
+   - The results showed the dispersion of the features, indicating how well the model was able to differentiate between different classes based on the learned features.
+
+
+  2. **t-SNE (t-Distributed Stochastic Neighbor Embedding)**:
+   - t-SNE was used for further visualization in a 2D space, helping to better understand the similarity relationships between data points.
+   - t-SNE attempts to maintain local relationships and group similar images together in the lower-dimensional space, providing insights into how effectively the model learned class-related features.
+
+
+  3. **k-Means Clustering**:
+   - k-Means clustering was applied to group the extracted features into clusters. By comparing the clusters with the actual labels, the model's ability to separate different classes was assessed.
+   - The clustering results provided a way to evaluate how well the self-supervised learning method managed to capture the underlying structure of the data without using labeled examples.
+
+
 ## Evaluation Results and Insights
 
-### **Confusion Matrix for Fine-Tuned Model (60 Epochs)**
+### Supervised_training VS Fine Tune:
+
+#### **Confusion Matrix for Fine-Tuned Model (60 Epochs)**
 ![confusion_matrix_fine_tuning_60epochs](https://github.com/user-attachments/assets/fd22537f-3686-46c7-bde6-f785e9d7e5a7)
 
 The confusion matrix displayed shows the results of the model's performance after fine-tuning for 60 epochs. The model's predictions are compared with the true labels across all 10 classes of the STL10 dataset.
@@ -33,7 +53,7 @@ The confusion matrix displayed shows the results of the model's performance afte
 - In the fine-tuned model's confusion matrix, the model achieves high accuracy in predicting most classes, though there are some misclassifications particularly for certain classes (e.g., class 3 and class 8).
 
 
-### **Confusion Matrix for Initial Supervised Training (60 Epochs)**
+#### **Confusion Matrix for Initial Supervised Training (60 Epochs)**
 ![confusion_matrix_60epochs](https://github.com/user-attachments/assets/0e25c670-1bae-49e0-8b49-76c7ffc041ad)
 
 The confusion matrix for the supervised model trained on the STL10 labeled dataset for 60 epochs shows the initial performance of the model before fine-tuning.
@@ -41,7 +61,7 @@ The confusion matrix for the supervised model trained on the STL10 labeled datas
 - Similar to the fine-tuned model's confusion matrix, the **diagonal elements** show the correct predictions, with some misclassifications visible off the diagonal.
 - Compared to the fine-tuned model, there are more misclassifications across all classes, indicating that the fine-tuned model has improved performance by learning better feature representations.
 
-### **Loss and Accuracy Curves for Fine-Tuned Model (60 Epochs)**
+#### **Loss and Accuracy Curves for Fine-Tuned Model (60 Epochs)**
 ![fine_tuning_classification_graphs_60epochs](https://github.com/user-attachments/assets/1d5ac73a-88d0-40ef-913e-e75ef37d76b1)
 
 These graphs show the training loss and accuracy over the course of 60 epochs for the fine-tuned model.
@@ -49,7 +69,7 @@ These graphs show the training loss and accuracy over the course of 60 epochs fo
 - **Loss Graph**: The **training loss** steadily decreases as the model learns, with some fluctuations in the validation loss. However, both the training and validation losses reach relatively stable values by the end of the training.
 - **Accuracy Graph**: The **train accuracy** steadily increases, while the **validation accuracy** fluctuates initially but increases overall. After 60 epochs, the validation accuracy reaches around 84%, indicating that the model successfully learned to generalize.
 
-### **Loss and Accuracy Curves for Supervised Model (60 Epochs)**
+#### **Loss and Accuracy Curves for Supervised Model (60 Epochs)**
 ![train_val_graphs_supervised_model_60epochs](https://github.com/user-attachments/assets/4d8175ea-e5c7-4e0e-9696-c3e05132f497)
 
 These graphs represent the training loss and accuracy over 60 epochs for the supervised model trained on the labeled dataset without any self-supervised pretraining.
@@ -57,37 +77,34 @@ These graphs represent the training loss and accuracy over 60 epochs for the sup
 - **Loss Graph**: The **training loss** decreases more slowly than in the fine-tuned model, with more noticeable fluctuations in the validation loss.
 - **Accuracy Graph**: The **train accuracy** improves, but the **validation accuracy** increases more gradually and remains lower than the fine-tuned model, suggesting that the supervised model had a harder time generalizing to the validation set.
 
-### **Key Takeaways:**
+#### **Key Takeaways:**
 1. The **fine-tuned model** shows a significant improvement over the **supervised baseline model**, achieving higher accuracy and a more stable performance in both training and validation.
 2. The **confusion matrices** indicate that the fine-tuned model performs better in correctly classifying images across the various classes compared to the initial supervised model.
 3. The **loss and accuracy graphs** show a clear improvement in performance for the fine-tuned model, especially in terms of generalization, as indicated by the higher validation accuracy.
 4. Overall, the fine-tuning process using self-supervised learning with SimCLR has a positive impact on the model's ability to classify images more accurately.
 
      
-4. **features_quality_check:**
+### features_quality_check:
+
   Before fine-tuning the SSL-pretrained ResNet50 on the labeled portion of the STL10 dataset, the feature representations learned by the model were evaluated using dimensionality reduction and clustering techniques. The goal was to assess the quality of the features extracted by the SimCLR pretraining process.
 
   1. **PCA (Principal Component Analysis)**:
-   - PCA was applied to reduce the dimensionality of the feature space from 2048 to 2, allowing visualization of how well the model’s feature representations are clustered or spread out.
-   - The results showed the dispersion of the features, indicating how well the model was able to differentiate between different classes based on the learned features.
+     ![pca_plot](https://github.com/user-attachments/assets/faf7f286-734a-44cf-a6d6-0538d12ab0ff)
    - The dispersion of the points suggests that there isn't a clear separation between the categories, meaning that the model hasn’t yet learned features that distinctly separate different classes.
    - Ideally, if the features were more discriminative, we would expect to see the points forming distinct clusters corresponding to different classes.
 
-   ![pca_plot](https://github.com/user-attachments/assets/faf7f286-734a-44cf-a6d6-0538d12ab0ff)
 
   2. **t-SNE (t-Distributed Stochastic Neighbor Embedding)**:
-   - t-SNE was used for further visualization in a 2D space, helping to better understand the similarity relationships between data points.
-   - t-SNE attempts to maintain local relationships and group similar images together in the lower-dimensional space, providing insights into how effectively the model learned class-related features.
-   - In this graph, we see the feature representations plotted in a 2D space. The feature extractor's output is spread across the plot in a cloud-like shape. This indicates that the features are not clearly clustered or separated by class. The dispersion suggests that the model hasn't yet learned to distinctly separate different categories or features in the lower-dimensional space.
-
 ![tsne_plot](https://github.com/user-attachments/assets/c81c162b-f75a-466a-866d-99df2b5c736a)
 
-  3. **k-Means Clustering**:
-   - k-Means clustering was applied to group the extracted features into clusters. By comparing the clusters with the actual labels, the model's ability to separate different classes was assessed.
-   - The clustering results provided a way to evaluate how well the self-supervised learning method managed to capture the underlying structure of the data without using labeled examples.
-   - In this,the different colors represent different clusters formed by the k-Means algorithm. These clusters suggest that, although the features may not have been clearly separated initially (as shown in the first graph), the model has managed to group similar data points together based on the feature representations. The separation into distinct clusters indicates that the model was able to capture some structure of the data even without labels.
+   - In this graph, we see the feature representations plotted in a 2D space. The feature extractor's output is spread across the plot in a cloud-like shape. This indicates that the features are not clearly clustered or separated by class. The dispersion suggests that the model hasn't yet learned to distinctly separate different categories or features in the lower-dimensional space.
 
+
+  3. **k-Means Clustering**:
 ![kmeans_plot](https://github.com/user-attachments/assets/dd6ed64a-02d6-490b-999d-fc3b272a9603)
+
+    - In this,the different colors represent different clusters formed by the k-Means algorithm. These clusters suggest that, although the features may not have been clearly separated initially (as shown in the first graph), the model has managed to group similar data points together based on the feature representations. The separation into distinct clusters indicates that the model was able to capture some structure of the data even without labels.
+    
 
   **What We Learn**:
   - **Clustering Success**: The k-Means clustering graph shows that distinct groups or clusters have been formed, which suggests that the feature extractor has captured meaningful patterns from the data. The model is able to differentiate between different categories, even though this wasn't as clear in the t-SNE visualization.

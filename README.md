@@ -39,6 +39,47 @@ This project explores self-supervised learning techniques using SimCLR and evalu
    - The clustering results provided a way to evaluate how well the self-supervised learning method managed to capture the underlying structure of the data without using labeled examples.
 
 
+## Dataset - STL10
+
+The STL10 dataset is designed for developing self-supervised learning techniques. It includes:
+- **Unlabeled Set:** 100,000 images (for SSL training).
+- **Train Set:** 5,000 labeled images across 10 classes (500 per class).
+- **Test Set:** 8,000 labeled images across the same 10 classes.
+- The dataset is loaded using PyTorch's `torchvision.datasets.STL10` utility.
+
+## Project Structure
+```python
+
+project_root/
+├── dataset/
+│   └── stl10_loader.py          # Responsible for loading and preprocessing the STL10 dataset.
+│
+├── loss_functions/
+│   └── info_nce.py              # Implementation of the InfoNCE loss function used in SimCLR.
+│
+├── model/
+│   └── resnet50.py              # Defines the ResNet50 architecture with optional modifications (e.g., fine-tuning or custom classification head).
+│
+├── trainers/
+│   ├── train.py                 # Implements the training loop for supervised and SSL models.
+│   ├── validate.py              # Implements the validation loop for calculating validation loss and accuracy.
+│   └── test.py                  # Implements the testing loop for evaluating the model on the test dataset.
+│
+├── output/
+│   ├── logs/                    # Stores loss and accuracy graphs, as well as confusion matrix images.
+│   └── models/                  # Stores the trained model weights (.pth files) for SimCLR and fine-tuning.
+│
+├── simclr_train.py              # Main script for training SimCLR on the STL10 unlabeled dataset.
+├── supervised_train.py          # Main script for supervised training on the STL10 labeled dataset.
+├── fine_tuning.py               # Main script for fine-tuning a model using SSL-pretrained weights.
+├── features_quality_check.py    # Main script for features_quality_check a model using SSL-pretrained weights.
+├── README.md                    # Project description, instructions, and results.
+└── .gitignore                   # Specifies files and folders to exclude from version control.
+```
+
+
+
+
 ## Evaluation Results and Insights
 
 ### Supervised_training VS Fine Tune:
@@ -114,44 +155,6 @@ These graphs represent the training loss and accuracy over 60 epochs for the sup
   These techniques were employed to gain a deeper understanding of the effectiveness of the feature extractor before applying the fine-tuning process on the labeled dataset.
 
 
-
-## Dataset - STL10
-
-The STL10 dataset is designed for developing self-supervised learning techniques. It includes:
-- **Unlabeled Set:** 100,000 images (for SSL training).
-- **Train Set:** 5,000 labeled images across 10 classes (500 per class).
-- **Test Set:** 8,000 labeled images across the same 10 classes.
-- The dataset is loaded using PyTorch's `torchvision.datasets.STL10` utility.
-
-## Project Structure
-```python
-
-project_root/
-├── dataset/
-│   └── stl10_loader.py          # Responsible for loading and preprocessing the STL10 dataset.
-│
-├── loss_functions/
-│   └── info_nce.py              # Implementation of the InfoNCE loss function used in SimCLR.
-│
-├── model/
-│   └── resnet50.py              # Defines the ResNet50 architecture with optional modifications (e.g., fine-tuning or custom classification head).
-│
-├── trainers/
-│   ├── train.py                 # Implements the training loop for supervised and SSL models.
-│   ├── validate.py              # Implements the validation loop for calculating validation loss and accuracy.
-│   └── test.py                  # Implements the testing loop for evaluating the model on the test dataset.
-│
-├── output/
-│   ├── logs/                    # Stores loss and accuracy graphs, as well as confusion matrix images.
-│   └── models/                  # Stores the trained model weights (.pth files) for SimCLR and fine-tuning.
-│
-├── simclr_train.py              # Main script for training SimCLR on the STL10 unlabeled dataset.
-├── supervised_train.py          # Main script for supervised training on the STL10 labeled dataset.
-├── fine_tuning.py               # Main script for fine-tuning a model using SSL-pretrained weights.
-├── features_quality_check.py    # Main script for features_quality_check a model using SSL-pretrained weights.
-├── README.md                    # Project description, instructions, and results.
-└── .gitignore                   # Specifies files and folders to exclude from version control.
-```
 
 
 

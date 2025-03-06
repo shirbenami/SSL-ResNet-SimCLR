@@ -1,4 +1,5 @@
 # SimCLR-Based Training and Fine-Tuning on STL10 Dataset
+![simclr_contrastive_learning](https://github.com/user-attachments/assets/7488a8e1-e232-4dc4-8405-082f2128c59d)
 
 This repository contains a deep learning project focused on implementing SimCLR (Simple Contrastive Learning of Representations) for self-supervised learning and fine-tuning it on the STL10 dataset. The project includes training, validation, and testing modules, as well as visualization and evaluation tools.
 

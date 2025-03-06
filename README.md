@@ -135,15 +135,15 @@ These graphs represent the training loss and accuracy over 60 epochs for the sup
 
 
   2. **t-SNE (t-Distributed Stochastic Neighbor Embedding)**:
-![tsne_plot](https://github.com/user-attachments/assets/c81c162b-f75a-466a-866d-99df2b5c736a)
+   ![tsne_plot](https://github.com/user-attachments/assets/c81c162b-f75a-466a-866d-99df2b5c736a)
 
    - In this graph, we see the feature representations plotted in a 2D space. The feature extractor's output is spread across the plot in a cloud-like shape. This indicates that the features are not clearly clustered or separated by class. The dispersion suggests that the model hasn't yet learned to distinctly separate different categories or features in the lower-dimensional space.
 
 
   3. **k-Means Clustering**:
-![kmeans_plot](https://github.com/user-attachments/assets/dd6ed64a-02d6-490b-999d-fc3b272a9603)
+   ![kmeans_plot](https://github.com/user-attachments/assets/dd6ed64a-02d6-490b-999d-fc3b272a9603)
 
-    - In this,the different colors represent different clusters formed by the k-Means algorithm. These clusters suggest that, although the features may not have been clearly separated initially (as shown in the first graph), the model has managed to group similar data points together based on the feature representations. The separation into distinct clusters indicates that the model was able to capture some structure of the data even without labels.
+   - In this,the different colors represent different clusters formed by the k-Means algorithm. These clusters suggest that, although the features may not have been clearly separated initially (as shown in the first graph), the model has managed to group similar data points together based on the feature representations. The separation into distinct clusters indicates that the model was able to capture some structure of the data even without labels.
     
 
   **What We Learn**:

@@ -8,7 +8,7 @@ This project explores self-supervised learning techniques using SimCLR and evalu
 
 1.  **Supervised Training Baseline:**
    - Trained ResNet50 from scratch on the STL10 labeled dataset as a baseline for comparison.
-   - 
+     
 2. **Self-Supervised Pretraining (SimCLR):**
    - Pretrained ResNet50 on the STL10 dataset's unlabeled images.
    - Optimized using the InfoNCE loss function to learn useful feature representations.
@@ -21,9 +21,50 @@ This project explores self-supervised learning techniques using SimCLR and evalu
    -  Compared the performance of the SSL-trained model with the supervised baseline.
    - Visualized performance metrics such as loss, accuracy, and confusion matrix.
 
+## Evaluation Results and Insights
 
-   - 
-3. **features_quality_check:**
+### **Confusion Matrix for Fine-Tuned Model (60 Epochs)**
+![confusion_matrix_fine_tuning_60epochs](https://github.com/user-attachments/assets/fd22537f-3686-46c7-bde6-f785e9d7e5a7)
+
+The confusion matrix displayed shows the results of the model's performance after fine-tuning for 60 epochs. The model's predictions are compared with the true labels across all 10 classes of the STL10 dataset.
+
+- The **diagonal elements** represent the correct classifications, with high values on the diagonal indicating strong performance in predicting the correct class for most images.
+- The **off-diagonal elements** show misclassifications, with smaller values suggesting where the model may have struggled.
+- In the fine-tuned model's confusion matrix, the model achieves high accuracy in predicting most classes, though there are some misclassifications particularly for certain classes (e.g., class 3 and class 8).
+
+
+### **Confusion Matrix for Initial Supervised Training (60 Epochs)**
+![confusion_matrix_60epochs](https://github.com/user-attachments/assets/0e25c670-1bae-49e0-8b49-76c7ffc041ad)
+
+The confusion matrix for the supervised model trained on the STL10 labeled dataset for 60 epochs shows the initial performance of the model before fine-tuning.
+
+- Similar to the fine-tuned model's confusion matrix, the **diagonal elements** show the correct predictions, with some misclassifications visible off the diagonal.
+- Compared to the fine-tuned model, there are more misclassifications across all classes, indicating that the fine-tuned model has improved performance by learning better feature representations.
+
+### **Loss and Accuracy Curves for Fine-Tuned Model (60 Epochs)**
+![fine_tuning_classification_graphs_60epochs](https://github.com/user-attachments/assets/1d5ac73a-88d0-40ef-913e-e75ef37d76b1)
+
+These graphs show the training loss and accuracy over the course of 60 epochs for the fine-tuned model.
+
+- **Loss Graph**: The **training loss** steadily decreases as the model learns, with some fluctuations in the validation loss. However, both the training and validation losses reach relatively stable values by the end of the training.
+- **Accuracy Graph**: The **train accuracy** steadily increases, while the **validation accuracy** fluctuates initially but increases overall. After 60 epochs, the validation accuracy reaches around 84%, indicating that the model successfully learned to generalize.
+
+### **Loss and Accuracy Curves for Supervised Model (60 Epochs)**
+![train_val_graphs_supervised_model_60epochs](https://github.com/user-attachments/assets/4d8175ea-e5c7-4e0e-9696-c3e05132f497)
+
+These graphs represent the training loss and accuracy over 60 epochs for the supervised model trained on the labeled dataset without any self-supervised pretraining.
+
+- **Loss Graph**: The **training loss** decreases more slowly than in the fine-tuned model, with more noticeable fluctuations in the validation loss.
+- **Accuracy Graph**: The **train accuracy** improves, but the **validation accuracy** increases more gradually and remains lower than the fine-tuned model, suggesting that the supervised model had a harder time generalizing to the validation set.
+
+### **Key Takeaways:**
+1. The **fine-tuned model** shows a significant improvement over the **supervised baseline model**, achieving higher accuracy and a more stable performance in both training and validation.
+2. The **confusion matrices** indicate that the fine-tuned model performs better in correctly classifying images across the various classes compared to the initial supervised model.
+3. The **loss and accuracy graphs** show a clear improvement in performance for the fine-tuned model, especially in terms of generalization, as indicated by the higher validation accuracy.
+4. Overall, the fine-tuning process using self-supervised learning with SimCLR has a positive impact on the model's ability to classify images more accurately.
+
+     
+4. **features_quality_check:**
   Before fine-tuning the SSL-pretrained ResNet50 on the labeled portion of the STL10 dataset, the feature representations learned by the model were evaluated using dimensionality reduction and clustering techniques. The goal was to assess the quality of the features extracted by the SimCLR pretraining process.
 
   1. **PCA (Principal Component Analysis)**:
@@ -66,6 +107,7 @@ The STL10 dataset is designed for developing self-supervised learning techniques
 - The dataset is loaded using PyTorch's `torchvision.datasets.STL10` utility.
 
 ## Project Structure
+```python
 
 project_root/
 ├── dataset/
@@ -92,6 +134,7 @@ project_root/
 ├── features_quality_check.py    # Main script for features_quality_check a model using SSL-pretrained weights.
 ├── README.md                    # Project description, instructions, and results.
 └── .gitignore                   # Specifies files and folders to exclude from version control.
+```
 
 
 

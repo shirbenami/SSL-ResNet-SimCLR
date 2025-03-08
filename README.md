@@ -23,19 +23,18 @@ This project explores self-supervised learning techniques using SimCLR and evalu
 4. **features_quality_check:**
   Before fine-tuning the SSL-pretrained ResNet50 on the labeled portion of the STL10 dataset, the feature representations learned by the model were evaluated using dimensionality reduction and clustering techniques. The goal was to assess the quality of the features extracted by the SimCLR pretraining process.
 
-  1. **PCA (Principal Component Analysis)**:
-   - PCA was applied to reduce the dimensionality of the feature space from 2048 to 2, allowing visualization of how well the model’s feature representations are clustered or spread out.
-   - The results showed the dispersion of the features, indicating how well the model was able to differentiate between different classes based on the learned features.
+   4.1. **PCA (Principal Component Analysis)**:
+      - PCA was applied to reduce the dimensionality of the feature space from 2048 to 2, allowing visualization of how well the model’s feature representations are clustered or spread out.
+      - The results showed the dispersion of the features, indicating how well the model was able to differentiate between different classes based on the learned features.
+
+   4.2. **t-SNE (t-Distributed Stochastic Neighbor Embedding)**:
+      - t-SNE was used for further visualization in a 2D space, helping to better understand the similarity relationships between data points.
+      - t-SNE attempts to maintain local relationships and group similar images together in the lower-dimensional space, providing insights into how effectively the model learned class-related features.
 
 
-  2. **t-SNE (t-Distributed Stochastic Neighbor Embedding)**:
-   - t-SNE was used for further visualization in a 2D space, helping to better understand the similarity relationships between data points.
-   - t-SNE attempts to maintain local relationships and group similar images together in the lower-dimensional space, providing insights into how effectively the model learned class-related features.
-
-
-  3. **k-Means Clustering**:
-   - k-Means clustering was applied to group the extracted features into clusters. By comparing the clusters with the actual labels, the model's ability to separate different classes was assessed.
-   - The clustering results provided a way to evaluate how well the self-supervised learning method managed to capture the underlying structure of the data without using labeled examples.
+   4.3. **k-Means Clustering**:
+      - k-Means clustering was applied to group the extracted features into clusters. By comparing the clusters with the actual labels, the model's ability to separate different classes was assessed.
+      - The clustering results provided a way to evaluate how well the self-supervised learning method managed to capture the underlying structure of the data without using labeled examples.
 
 
 ## Dataset - STL10

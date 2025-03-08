@@ -3,6 +3,7 @@
 
 This repository contains a deep learning project focused on implementing SimCLR (Simple Contrastive Learning of Representations) for self-supervised learning and fine-tuning it on the STL10 dataset. The project includes training, validation, and testing modules, as well as visualization and evaluation tools.
 
+
 ## Project Overview
 
 This project explores self-supervised learning techniques using SimCLR and evaluates its impact on classification performance when fine-tuned on a labeled dataset. The key steps include:

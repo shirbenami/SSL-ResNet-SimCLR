@@ -128,7 +128,7 @@ These graphs represent the training loss and accuracy over 60 epochs for the sup
   Before fine-tuning the SSL-pretrained ResNet50 on the labeled portion of the STL10 dataset, the feature representations learned by the model were evaluated using dimensionality reduction and clustering techniques. The goal was to assess the quality of the features extracted by the SimCLR pretraining process.
 
   1. **PCA (Principal Component Analysis)**:
-     ![pca_plot](https://github.com/user-attachments/assets/faf7f286-734a-44cf-a6d6-0538d12ab0ff)
+   ![pca_plot](https://github.com/user-attachments/assets/faf7f286-734a-44cf-a6d6-0538d12ab0ff)
    - The dispersion of the points suggests that there isn't a clear separation between the categories, meaning that the model hasn’t yet learned features that distinctly separate different classes.
    - Ideally, if the features were more discriminative, we would expect to see the points forming distinct clusters corresponding to different classes.
 

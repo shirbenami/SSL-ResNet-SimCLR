@@ -38,8 +38,8 @@ This project explores self-supervised learning techniques using SimCLR and evalu
       - The clustering results provided a way to evaluate how well the self-supervised learning method managed to capture the underlying structure of the data without using labeled examples.
   
    4.4 **KNN (k-Nearest Neighbors)**
-      -def "knn_classifier": This implementation uses the K-Nearest Neighbors (KNN) algorithm to classify images based on precomputed feature embeddings. The classifier computes the similarity between test images and training images, retrieves the K nearest neighbors, and uses their labels to classify the test images.
-      -def "plot_knn_exemple": This implementation uses for Nearest Neighbor Visualization: additionally, k-Nearest Neighbors (KNN) was used to assess the similarity between the learned embeddings. The goal was to visualize the nearest neighbors for a few random test samples. Using the Euclidean distance between embeddings, KNN identified the most similar images.
+      - def "knn_classifier": This implementation uses the K-Nearest Neighbors (KNN) algorithm to classify images based on precomputed feature embeddings. The classifier computes the similarity between test images and training images, retrieves the K nearest neighbors, and uses their labels to classify the test images.
+      - def "plot_knn_exemple": This implementation uses for Nearest Neighbor Visualization: additionally, k-Nearest Neighbors (KNN) was used to assess the similarity between the learned embeddings. The goal was to visualize the nearest neighbors for a few random test samples. Using the Euclidean distance between embeddings, KNN identified the most similar images.
 
 ## Dataset - STL10
 

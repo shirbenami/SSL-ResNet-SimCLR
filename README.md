@@ -154,12 +154,12 @@ These graphs represent the training loss and accuracy over 60 epochs for the sup
    - In this,the different colors represent different clusters formed by the k-Means algorithm. These clusters suggest that, although the features may not have been clearly separated initially (as shown in the first graph), the model has managed to group similar data points together based on the feature representations. The separation into distinct clusters indicates that the model was able to capture some structure of the data even without labels.
 
  4. **KNN**:
-    -Top-1 & Top-5 Accuracy: The classifier computes both Top-1 (the correct label is the model's top prediction) and Top-5 accuracy (the correct label is within the model's top 5 predictions) and the results:
+    - Top-1 & Top-5 Accuracy: The classifier computes both Top-1 (the correct label is the model's top prediction) and Top-5 accuracy (the correct label is within the model's top 5 predictions) and the results:
         Top-1 accuracy: **91.94%**
         Top-5 accuracy: **98.30%**
     This are very strong results, meaning the model is able to correctly identify the label of an image most of the times.
    
-    -The results were visualized, showing a query image alongside its nearest neighbors, with the distances indicating how closely related they were based on the learned feature representations. This process allowed for a deeper understanding of how well the model learned to capture semantic similarities between images.
+    - The results were visualized, showing a query image alongside its nearest neighbors, with the distances indicating how closely related they were based on the learned feature representations. This process allowed for a deeper understanding of how well the model learned to capture semantic similarities between images.
     
    ![img_776](https://github.com/user-attachments/assets/eab2d3ab-5bc8-4f5b-b230-20080fa532c9)
    ![img_6883](https://github.com/user-attachments/assets/239945fe-75e8-46cb-8a1c-ce409af06d23)

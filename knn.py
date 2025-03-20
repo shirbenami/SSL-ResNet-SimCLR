@@ -50,7 +50,7 @@ def get_image_as_np_array(img_tensor: str):
 
 # This function plots images and their nearest neighbors based on their embeddings.
 # It uses K-Nearest Neighbors (KNN) to find the closest images by computing the Euclidean distance between their feature vectors.
-def plot_knn_examples(embeddings, filenames,test_dataset, n_neighbors=7, num_examples=6):
+def plot_knn_examples(embeddings, filenames,test_dataset, n_neighbors, num_examples=6):
     """
     This function selects random samples from the dataset and finds their nearest neighbors using KNN.
     It then visualizes the query image along with its nearest neighbors.
@@ -65,6 +65,7 @@ def plot_knn_examples(embeddings, filenames,test_dataset, n_neighbors=7, num_exa
     The closer the distance, the more similar the images are.
     """
         
+
     # lets look at the nearest neighbors for some samples
     # we use the sklearn library
     nbrs = NearestNeighbors(n_neighbors=n_neighbors).fit(embeddings)
@@ -102,7 +103,78 @@ def plot_knn_examples(embeddings, filenames,test_dataset, n_neighbors=7, num_exa
         plt.savefig(f"./output/logs/img_{neighbor_idx}.png")
             
 
+@torch.no_grad()
+def knn_classifier(train_features, train_labels, test_features, test_labels, k, T, num_classes=1000):
+    """
+    Perform KNN classification on the test set using the embeddings from the train set.
+    Args:
+    - train_features: embeddings of the train set
+    - train_labels: labels for the train set
+    - test_features: embeddings of the test set
+    - test_labels: labels for the test set
+    - k: number of nearest neighbors to consider
+    - T: temperature scaling for softmax
+    - num_classes: number of classes (default is 10 for STL10)
 
+    Returns:
+    - top1: top-1 accuracy
+    - top5: top-5 accuracy
+    """
+    top1, top5, total = 0.0, 0.0, 0
+    train_features = train_features.t()
+    num_test_images, num_chunks = test_labels.shape[0], 100
+    imgs_per_chunk = num_test_images // num_chunks
+    retrieval_one_hot = torch.zeros(k, num_classes).to(train_features.device)  # one-hot encoding
+
+    if isinstance(train_labels, torch.Tensor) is False:
+        train_labels = torch.tensor(train_labels, dtype=torch.long).to(train_features.device)
+    
+    if isinstance(test_labels, torch.Tensor) is False:
+        test_labels = torch.tensor(test_labels, dtype=torch.long).to(test_features.device)
+        
+    for idx in range(0, num_test_images, imgs_per_chunk):
+        # get the features for test images
+        features = test_features[
+            idx : min((idx + imgs_per_chunk), num_test_images), :
+        ]
+        targets = test_labels[idx : min((idx + imgs_per_chunk), num_test_images)]
+        batch_size = targets.shape[0]
+
+        # calculate the dot product and compute top-k neighbors
+        similarity = torch.mm(features, train_features)
+        distances, indices = similarity.topk(k, largest=True, sorted=True)
+        
+        # getting the labels for the top-k neighbors
+        candidates = train_labels.view(1, -1).expand(batch_size, -1)
+        retrieved_neighbors = torch.gather(candidates, 1, indices)
+
+        # create a one-hot encoding for the nearest neighbors
+        retrieval_one_hot.resize_(batch_size * k, num_classes).zero_()
+        retrieval_one_hot.scatter_(1, retrieved_neighbors.view(-1, 1), 1)
+        
+        #  calculate the exponential of the distances
+        distances_transform = distances.clone().div_(T).exp_()
+        
+        # calculate the probabilities of the nearest neighbors
+        probs = torch.sum(
+            torch.mul(
+                retrieval_one_hot.view(batch_size, -1, num_classes),
+                distances_transform.view(batch_size, -1, 1),
+            ),
+            1,
+        )
+        
+        # sort the probabilities and get the predictions 
+        _, predictions = probs.sort(1, True)
+
+        # find the predictions that match the target
+        correct = predictions.eq(targets.data.view(-1, 1))
+        top1 = top1 + correct.narrow(1, 0, 1).sum().item()
+        top5 = top5 + correct.narrow(1, 0, min(5, k)).sum().item()  # top5 does not make sense if k < 5
+        total += targets.size(0)
+    top1 = top1 * 100.0 / total
+    top5 = top5 * 100.0 / total
+    return top1, top5
 
 """
 Build a ResNet50 model for the STL10 dataset with a projection head
@@ -154,7 +226,7 @@ transform = Compose([
     #RandomResizedCrop(96),
     #RandomHorizontalFlip(),
     ToTensor(),
-    #Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+    Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
 ])
 
 # Load the STL10 dataset
@@ -169,8 +241,26 @@ dataloader_test = torch.utils.data.DataLoader(
 )
 
 # Generate embeddings for the test dataset using the model
-embeddings, filenames = generate_embeddings(model, dataloader_test)
+test_embeddings, test_filenames = generate_embeddings(model, dataloader_test)
 
 # Plot the KNN examples
-plot_knn_examples(embeddings, filenames,test_dataset)
+#plot_knn_examples(test_embeddings, test_filenames,test_dataset,n_neighbors=7)
 
+# load the train dataset
+train_dataset = STL10(root='./data', split='train', download=True, transform=transform)
+
+dataloader_train = torch.utils.data.DataLoader(
+    train_dataset,
+    batch_size=32,
+    shuffle=False,
+    drop_last=False,
+    num_workers=0,
+)
+
+train_embeddings, train_filenames = generate_embeddings(model, dataloader_train)
+
+# Perform KNN classification
+top1_accuracy, top5_accuracy = knn_classifier(train_embeddings, train_dataset.labels, test_embeddings, test_dataset.labels, k=5, T=0.07, num_classes=10)
+
+print(f"Top-1 accuracy: {top1_accuracy:.2f}%")
+print(f"Top-5 accuracy: {top5_accuracy:.2f}%")

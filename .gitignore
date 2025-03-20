@@ -173,4 +173,5 @@ images/
 .venv1/
 output/
 STL10/
+data/
 

@@ -36,7 +36,10 @@ This project explores self-supervised learning techniques using SimCLR and evalu
    4.3. **k-Means Clustering**:
       - k-Means clustering was applied to group the extracted features into clusters. By comparing the clusters with the actual labels, the model's ability to separate different classes was assessed.
       - The clustering results provided a way to evaluate how well the self-supervised learning method managed to capture the underlying structure of the data without using labeled examples.
+  
+   #### 4.4 KNN (k-Nearest Neighbors) for Nearest Neighbor Visualization
 
+Additionally, k-Nearest Neighbors (KNN) was used to assess the similarity between the learned embeddings. The goal was to visualize the nearest neighbors for a few random test samples. Using the Euclidean distance between embeddings, KNN identified the most similar images.
 
 ## Dataset - STL10
 
@@ -144,7 +147,15 @@ These graphs represent the training loss and accuracy over 60 epochs for the sup
    ![kmeans_plot](https://github.com/user-attachments/assets/dd6ed64a-02d6-490b-999d-fc3b272a9603)
 
    - In this,the different colors represent different clusters formed by the k-Means algorithm. These clusters suggest that, although the features may not have been clearly separated initially (as shown in the first graph), the model has managed to group similar data points together based on the feature representations. The separation into distinct clusters indicates that the model was able to capture some structure of the data even without labels.
+
+ 4. **KNN**:
+    -The results were visualized, showing a query image alongside its nearest neighbors, with the distances indicating how closely related they were based on the learned feature representations. This process allowed for a deeper understanding of how well the model learned to capture semantic similarities between images.
     
+   ![img_776](https://github.com/user-attachments/assets/eab2d3ab-5bc8-4f5b-b230-20080fa532c9)
+   ![img_6883](https://github.com/user-attachments/assets/239945fe-75e8-46cb-8a1c-ce409af06d23)
+   ![img_6130](https://github.com/user-attachments/assets/237afc04-f365-44f8-bf03-25064932a71a)
+   ![img_1946](https://github.com/user-attachments/assets/bdbc980a-0a5f-4f95-9456-6fb8c56f8a00)
+   ![img_3594](https://github.com/user-attachments/assets/217285dc-05f2-4535-bc86-2c9bba823166)
 
   **What We Learn**:
   - **Clustering Success**: The k-Means clustering graph shows that distinct groups or clusters have been formed, which suggests that the feature extractor has captured meaningful patterns from the data. The model is able to differentiate between different categories, even though this wasn't as clear in the t-SNE visualization.
@@ -158,6 +169,7 @@ These graphs represent the training loss and accuracy over 60 epochs for the sup
 ## Resources
 - [SimCLR Tutorial](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial17/SimCLR.html)
 - [STL10 Dataset](https://cs.stanford.edu/~acoates/stl10/)
+- [Exploring SimCLR: A Simple Framework for Contrastive Learning of Visual Representations](https://sthalles.github.io/simple-self-supervised-learning/)
 
 
 

@@ -49,16 +49,19 @@ with torch.no_grad(): # Disable gradient tracking
 # Concatenate the features into a single tensor
 X = torch.cat(features, dim=0)
 print("Features shape:", X.shape)
+print("x:", X)
 
 # Convert the tensor to a numpy array
 x_np = X.detach().numpy() 
+print("x_np shape:", x_np.shape)
+print("x_np:", x_np)
 
-""" 
+
+"""
 Now we are going to perform PCA, t-SNE, and K-means clustering on the extracted features.
 The main goal is to visualize the high-dimensional features in a lower-dimensional space
 and see if there are any clusters or patterns in the data.
 """
-
 
 # Perform PCA with 2 components (for visualization)
 pca = PCA(n_components=2) 
@@ -75,6 +78,29 @@ plt.title('PCA of SimCLR Features')
 plt.savefig("./output/logs/pca_plot.png")
 print("PCA plot saved successfully!")
 
+
+# Perform PCA with 2 components (for visualization) and color points by their true labels
+pca = PCA(n_components=2) 
+X_pca = pca.fit_transform(x_np)
+
+# Get the true labels (assuming dataset.labels contains the true labels for the test set)
+true_labels = dataset.labels  # Actual labels from STL10 dataset
+
+# Plot the PCA results
+plt.figure(figsize=(10, 6))
+scatter = plt.scatter(X_pca[:, 0], X_pca[:, 1], c=true_labels, cmap='tab10', s=10)  # Color points by their true labels
+plt.xlabel('Principal Component 1')
+plt.ylabel('Principal Component 2')
+plt.title('PCA of SimCLR Features')
+
+# Add a colorbar to show the color mapping to the labels
+plt.colorbar(scatter)
+
+# Save the PCA plot
+plt.savefig("./output/logs/pca_plot_with_labels.png")
+print("PCA plot with labels saved successfully!")
+
+
 # Perform t-SNE
 tsne = TSNE(n_components=2, random_state=42)
 X_tsne = tsne.fit_transform(x_np)
@@ -86,9 +112,33 @@ plt.title("t-SNE of Feature Extractor Output")
 plt.xlabel("t-SNE Component 1")
 plt.ylabel("t-SNE Component 2")
 #plt.show()
+
 # Save the t-SNE plot
 plt.savefig("./output/logs/tsne_plot.png")
 print("t-SNE plot saved successfully!")
+
+
+
+# Perform t-SNE with and color points by their true labels
+tsne = TSNE(n_components=2, random_state=42)
+X_tsne = tsne.fit_transform(x_np)
+
+# Plot the t-SNE results
+plt.figure(figsize=(8,6))
+plt.scatter(X_tsne[:, 0], X_tsne[:, 1],c=true_labels,cmap='tab10', alpha=0.5)
+plt.title("t-SNE of Feature Extractor Output")
+plt.xlabel("t-SNE Component 1")
+plt.ylabel("t-SNE Component 2")
+
+# Add a colorbar to show the color mapping to the labels
+plt.colorbar(scatter)
+
+#plt.show()
+# Save the t-SNE plot
+plt.savefig("./output/logs/tsne_plot_with_labels.png")
+print("t-SNE plot saved successfully!")
+
+
 
 # Perform K-means clustering
 kmeans = KMeans(n_clusters=10, random_state=42)
@@ -105,4 +155,3 @@ plt.ylabel("t-SNE Component 2")
 # Save the K-means clustering plot
 plt.savefig("./output/logs/kmeans_plot.png")
 print("K-means plot saved successfully!")
-

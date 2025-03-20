@@ -44,12 +44,27 @@ def get_image_as_np_array(img_tensor: str):
     """Returns an image as an numpy array"""
     #img = Image.open(filename)
     #return np.asarray(img)
-    img = transforms.ToPILImage()(img_tensor)  # המרת tensor לתמונה
+    img = transforms.ToPILImage()(img_tensor)  
     return np.asarray(img)
 
+
+# This function plots images and their nearest neighbors based on their embeddings.
+# It uses K-Nearest Neighbors (KNN) to find the closest images by computing the Euclidean distance between their feature vectors.
 def plot_knn_examples(embeddings, filenames,test_dataset, n_neighbors=7, num_examples=6):
-    """Plots multiple rows of random images with their nearest neighbors"""
-    
+    """
+    This function selects random samples from the dataset and finds their nearest neighbors using KNN.
+    It then visualizes the query image along with its nearest neighbors.
+
+    Parameters:
+    - embeddings: the feature vectors (embeddings) of the images.
+    - filenames: list of image filenames corresponding to the embeddings.
+    - n_neighbors: number of neighbors to display (default is 3).
+    - num_examples: number of random examples to plot (default is 6).
+
+    KNN is used to compute the Euclidean distance between the embeddings of images.
+    The closer the distance, the more similar the images are.
+    """
+        
     # lets look at the nearest neighbors for some samples
     # we use the sklearn library
     nbrs = NearestNeighbors(n_neighbors=n_neighbors).fit(embeddings)
@@ -86,7 +101,6 @@ def plot_knn_examples(embeddings, filenames,test_dataset, n_neighbors=7, num_exa
         # Save the PCA plot
         plt.savefig(f"./output/logs/img_{neighbor_idx}.png")
             
-
 
 
 

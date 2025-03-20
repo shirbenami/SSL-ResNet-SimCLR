@@ -132,13 +132,17 @@ These graphs represent the training loss and accuracy over 60 epochs for the sup
   Before fine-tuning the SSL-pretrained ResNet50 on the labeled portion of the STL10 dataset, the feature representations learned by the model were evaluated using dimensionality reduction and clustering techniques. The goal was to assess the quality of the features extracted by the SimCLR pretraining process.
 
   1. **PCA (Principal Component Analysis)**:
-   ![pca_plot](https://github.com/user-attachments/assets/faf7f286-734a-44cf-a6d6-0538d12ab0ff)
+   ![pca_plot](https://github.com/user-attachments/assets/faf7f286-734a-44cf-a6d6-0538d12ab0ff)\
+   ![pca_plot_with_labels](https://github.com/user-attachments/assets/40970cc4-cc07-455b-b410-56ab26cb5f5e)
+
    - The dispersion of the points suggests that there isn't a clear separation between the categories, meaning that the model hasn’t yet learned features that distinctly separate different classes.
    - Ideally, if the features were more discriminative, we would expect to see the points forming distinct clusters corresponding to different classes.
 
 
   2. **t-SNE (t-Distributed Stochastic Neighbor Embedding)**:
    ![tsne_plot](https://github.com/user-attachments/assets/c81c162b-f75a-466a-866d-99df2b5c736a)
+   ![tsne_plot_with_labels](https://github.com/user-attachments/assets/e488fcdb-1e44-44c7-a894-b3fc26e8c800)
+
 
    - In this graph, we see the feature representations plotted in a 2D space. The feature extractor's output is spread across the plot in a cloud-like shape. This indicates that the features are not clearly clustered or separated by class. The dispersion suggests that the model hasn't yet learned to distinctly separate different categories or features in the lower-dimensional space.
 

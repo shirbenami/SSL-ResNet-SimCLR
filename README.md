@@ -148,6 +148,7 @@ These graphs represent the training loss and accuracy over 60 epochs for the sup
 
 
   3. **k-Means Clustering**:
+     
    ![kmeans_plot](https://github.com/user-attachments/assets/dd6ed64a-02d6-490b-999d-fc3b272a9603)
 
    - In this,the different colors represent different clusters formed by the k-Means algorithm. These clusters suggest that, although the features may not have been clearly separated initially (as shown in the first graph), the model has managed to group similar data points together based on the feature representations. The separation into distinct clusters indicates that the model was able to capture some structure of the data even without labels.

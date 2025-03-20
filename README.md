@@ -169,6 +169,7 @@ These graphs represent the training loss and accuracy over 60 epochs for the sup
 ## Resources
 - [SimCLR Tutorial](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial17/SimCLR.html)
 - [STL10 Dataset](https://cs.stanford.edu/~acoates/stl10/)
+- [Exploring SimCLR: A Simple Framework for Contrastive Learning of Visual Representations](https://sthalles.github.io/simple-self-supervised-learning/)
 
 
 

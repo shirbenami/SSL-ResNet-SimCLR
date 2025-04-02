@@ -3,6 +3,9 @@
 
 This repository contains a deep learning project focused on implementing SimCLR (Simple Contrastive Learning of Representations) for self-supervised learning and fine-tuning it on the STL10 dataset. The project includes training, validation, and testing modules, as well as visualization and evaluation tools.
 
+Resnet50 Architecture:
+![resnet_bannner (1)](https://github.com/user-attachments/assets/f46486ca-ff3e-4499-a6d5-e3b2159d7ec6)
+
 
 ## Project Overview
 
